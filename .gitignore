@@ -2,4 +2,4 @@
 env/
 \.env
 build-*/
-my-app/public/post/*.md
+my-app/public/post/*
