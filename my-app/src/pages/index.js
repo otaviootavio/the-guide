@@ -16,7 +16,7 @@ export async function getStaticProps() {
 
 export default function HomePage({ markdownList }) {
   return (
-    <div class="first-div">
+    <div className="first-div">
       <h1>PLaylists</h1>
       <ul>
         {markdownList.map(({ playlistTitle, id, descricaoPlaylist }) => (

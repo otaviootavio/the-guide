@@ -47,7 +47,7 @@ export async function getStaticProps(context) {
 
 export default function Post({ playlistTitle, content, descricaoPlaylist }) {
   return (
-    <div class="first-div">
+    <div className="first-div">
       <h1>{playlistTitle}</h1>
       <p>{descricaoPlaylist}</p>
       <div dangerouslySetInnerHTML={{ __html: content }} />
