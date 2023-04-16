@@ -1,5 +1,7 @@
-### Web3 Blockchain Fundamentals MOOC
+---
+playlist-title: Web3 Blockchain Fundamentals MOOC
 
+---
 ### Lecture 1: History of Blockchain Technology + 1
 https://www.youtube.com/watch?v=y8YyZELnVaw
 

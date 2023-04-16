@@ -69,7 +69,9 @@ urls_playlists = ler_urls_do_arquivo(arquivo_url)
 
 def salvar_videos_em_arquivo_md(titulo_playlist, videos, arquivo, diretorio):
     with open(os.path.join(diretorio, "".join(arquivo)), "w", encoding="utf-8") as f:
-        f.write(f"### {titulo_playlist}\n\n")
+        f.write(f"---\n")
+        f.write(f"playlist-title: {titulo_playlist}\n\n")
+        f.write(f"---\n")
         for posicao, titulo, link in videos:
             f.write(f"### {titulo} + {posicao}\n")
             f.write(f"{link}\n\n")
@@ -104,36 +106,6 @@ def adicionar_ao_index(
         else:
             f.write("\n")
 
-def link_pages(filename):
-    # Obter o caminho absoluto do arquivo
-    filepath = os.path.abspath(filename)
-
-    # Expressão regular para encontrar URLs de playlists do YouTube
-    youtube_regex = r"https://www.youtube.com/playlist\?list=([A-Za-z0-9_-]+)"
-
-    # Ler o conteúdo do arquivo
-    with open(filepath, "rb") as f:
-        content = f.read().decode()
-
-        # Extrair a URL da playlist do YouTube do arquivo
-        urls = re.findall(youtube_regex, content)
-
-        for url in urls:
-            # Extrair a chave da playlist da URL
-            parsed_url = urlparse(f"https://www.youtube.com/playlist?list={url}")
-            query_string = parse_qs(parsed_url.query)
-            playlist_key = query_string.get("list", [None])[0]
-
-            if not playlist_key:
-                print(f"URL inválida: {url}")
-                continue
-
-            # Substituir todas as chaves correspondentes pelo novo formato de link
-            content = content.replace(f"https://www.youtube.com/playlist?list={url}", f"Link! [[playlist_{playlist_key}]]")
-
-    # Escrever o conteúdo atualizado no mesmo arquivo
-    with open(filepath, "wb") as f:
-        f.write(content.encode())
 
 def obter_descricao_da_playlist(api_key, playlist_id):
     url_base = "https://www.googleapis.com/youtube/v3/playlists"
@@ -158,11 +130,6 @@ for url_playlist in urls_playlists:
     if titulo_playlist and videos:
         arquivo_md = f"playlist_{playlist_id}.md"
         salvar_videos_em_arquivo_md(titulo_playlist, videos, arquivo_md, diretorio_build)
-
         print(f"Arquivo .md gerado: {arquivo_md}")
-        adicionar_ao_index(
-            diretorio_build, titulo_playlist, url_playlist, descricao_playlist
-        )  # Passe "diretorio_build"
     else:
         print(f"Não foi possível obter informações da playlist: {url_playlist}")
-    link_pages(''.join([diretorio_build,'/','index.md' ]))

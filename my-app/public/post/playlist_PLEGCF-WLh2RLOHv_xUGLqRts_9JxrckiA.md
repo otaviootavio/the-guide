@@ -1,7 +1,7 @@
-Conteúdo do post aqui...
+---
+playlist-title: Foundations of Blockchains
 
-### Foundations of Blockchains
-
+---
 ### Foundations of Blockchains (Lecture 1.1: Focus of Lecture Series (+ a Little Hype)) + 1
 https://www.youtube.com/watch?v=KNJGPI0fuFA
 

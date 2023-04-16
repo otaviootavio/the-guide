@@ -1,5 +1,7 @@
-### Curso em Vídeo - JavaScript
+---
+playlist-title: Curso em Vídeo - JavaScript
 
+---
 ### Curso Grátis de JavaScript Moderno + 1
 https://www.youtube.com/watch?v=BXqUH86F-kA
 

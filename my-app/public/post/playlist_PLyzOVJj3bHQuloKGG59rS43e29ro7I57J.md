@@ -1,5 +1,7 @@
-### Missing Semester IAP 2020
+---
+playlist-title: Missing Semester IAP 2020
 
+---
 ### Lecture 1: Course Overview + The Shell (2020) + 1
 https://www.youtube.com/watch?v=Z56Jmr9Z34Q
 

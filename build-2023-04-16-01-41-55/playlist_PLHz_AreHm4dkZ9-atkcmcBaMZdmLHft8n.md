@@ -1,5 +1,7 @@
-### Curso completo e atual de HTML5 e CSS3 - Módulo 1 de 5
+---
+playlist-title: Curso completo e atual de HTML5 e CSS3 - Módulo 1 de 5
 
+---
 ### Começa aqui o novo @CursoemVideo de HTML5 e CSS3 + 1
 https://www.youtube.com/watch?v=Ejkb_YpuHWs
 

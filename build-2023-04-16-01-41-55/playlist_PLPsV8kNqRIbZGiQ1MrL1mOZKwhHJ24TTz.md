@@ -1,5 +1,7 @@
-### Ethereum Rio 2022
+---
+playlist-title: Ethereum Rio 2022
 
+---
 ### Ethereum Rio 2022 + 1
 https://www.youtube.com/watch?v=uyP9d1fIa78
 
