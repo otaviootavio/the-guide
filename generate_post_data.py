@@ -7,7 +7,7 @@ if not build_folders:
     print("Nenhuma pasta build encontrada.")
     exit()
 
-posts_directory = sorted(build_folders)[0]
+posts_directory = sorted(build_folders)[-1]
 posts_data = []
 
 for filename in os.listdir(posts_directory):
@@ -19,9 +19,10 @@ for filename in os.listdir(posts_directory):
             post_metadata = yaml.safe_load(yaml_header)
         post_data = {
             "id": post_id,
-            "title": post_metadata['playlist-title'],
+            "descricaoPlaylist": post_metadata['descricaoPlaylist'],
+            "playlistTitle": post_metadata['playlistTitle']
         }
         posts_data.append(post_data)
 
-with open(posts_directory+"/"+"posts_data.json", "w") as f:
+with open(posts_directory+"/"+"data.json", "w") as f:
     json.dump(posts_data, f)

@@ -67,3 +67,8 @@ img {
   display: block;
   margin: 0 auto;
 }
+
+.first-div{
+  width: 50%; 
+  margin: 0 auto;
+}

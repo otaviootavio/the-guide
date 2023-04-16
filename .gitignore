@@ -1,3 +1,5 @@
 .vscode/
 env/
 \.env
+build-*/
+my-app/public/post/*.md

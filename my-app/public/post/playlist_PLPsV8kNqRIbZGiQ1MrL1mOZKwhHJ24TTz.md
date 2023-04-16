@@ -1,6 +1,6 @@
 ---
-playlist-title: Ethereum Rio 2022
-
+playlistTitle: Ethereum Rio 2022
+descricaoPlaylist: ''
 ---
 ### Ethereum Rio 2022 + 1
 https://www.youtube.com/watch?v=uyP9d1fIa78

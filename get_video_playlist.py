@@ -4,6 +4,9 @@ from urllib.parse import urlparse, parse_qs
 import requests
 from dotenv import load_dotenv
 from datetime import datetime
+import bleach
+import yaml
+
 
 load_dotenv()
 api_key = os.getenv("YOUTUBE_API_KEY")
@@ -67,10 +70,13 @@ def ler_urls_do_arquivo(arquivo):
 urls_playlists = ler_urls_do_arquivo(arquivo_url)
 
 
-def salvar_videos_em_arquivo_md(titulo_playlist, videos, arquivo, diretorio):
+def salvar_videos_em_arquivo_md(titulo_playlist, videos, arquivo, diretorio, descricao_playlist):
     with open(os.path.join(diretorio, "".join(arquivo)), "w", encoding="utf-8") as f:
         f.write(f"---\n")
-        f.write(f"playlist-title: {titulo_playlist}\n\n")
+        sanitized_yaml = yaml.safe_dump({'descricaoPlaylist': sanitized_descricao})
+        
+        f.write(f"playlistTitle: {titulo_playlist}\n")
+        f.write(sanitized_yaml)
         f.write(f"---\n")
         for posicao, titulo, link in videos:
             f.write(f"### {titulo} + {posicao}\n")
@@ -125,11 +131,15 @@ for url_playlist in urls_playlists:
     playlist_id = url_playlist.split("=")[-1]
     titulo_playlist = obter_titulo_da_playlist(api_key, playlist_id)
     descricao_playlist = obter_descricao_da_playlist(api_key, playlist_id)
+
+    # Sanitize the description text using Bleach
+    sanitized_descricao = bleach.clean(descricao_playlist, tags=[], attributes={})
+
     videos = obter_videos_da_playlist(api_key, playlist_id)
 
     if titulo_playlist and videos:
         arquivo_md = f"playlist_{playlist_id}.md"
-        salvar_videos_em_arquivo_md(titulo_playlist, videos, arquivo_md, diretorio_build)
+        salvar_videos_em_arquivo_md(titulo_playlist, videos, arquivo_md, diretorio_build, sanitized_descricao)
         print(f"Arquivo .md gerado: {arquivo_md}")
     else:
         print(f"Não foi possível obter informações da playlist: {url_playlist}")

@@ -16,14 +16,16 @@ export async function getStaticProps() {
 
 export default function HomePage({ markdownList }) {
   return (
-    <div>
-      <h1>Posts</h1>
+    <div class="first-div">
+      <h1>PLaylists</h1>
       <ul>
-        {markdownList.map(({ title, id }) => (
+        {markdownList.map(({ playlistTitle, id, descricaoPlaylist }) => (
           <li key={id}>
             <Link href={`/post/${id}`}>
-                <span>{title} - {id}</span>
+                <h2>{playlistTitle}</h2>
             </Link>
+            <p>id:{id}</p>
+            <p>{descricaoPlaylist}</p>
           </li>
         ))}
       </ul>

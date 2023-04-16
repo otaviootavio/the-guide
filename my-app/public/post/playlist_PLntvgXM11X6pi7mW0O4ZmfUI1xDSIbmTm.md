@@ -1,6 +1,6 @@
 ---
-playlist-title: Curso em Vídeo - JavaScript
-
+playlistTitle: Curso em Vídeo - JavaScript
+descricaoPlaylist: ''
 ---
 ### Curso Grátis de JavaScript Moderno + 1
 https://www.youtube.com/watch?v=BXqUH86F-kA

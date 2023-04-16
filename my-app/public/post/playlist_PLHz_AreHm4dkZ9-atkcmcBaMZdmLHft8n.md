@@ -1,6 +1,7 @@
 ---
-playlist-title: Curso completo e atual de HTML5 e CSS3 - Módulo 1 de 5
-
+playlistTitle: Curso completo e atual de HTML5 e CSS3 - Módulo 1 de 5
+descricaoPlaylist: "Fa\xE7a agora mesmo o Curso de HTML5 e CSS3 do Professor Gustavo\
+  \ Guanabara, com aulas atualizadas e com material de apoio em PDF."
 ---
 ### Começa aqui o novo @CursoemVideo de HTML5 e CSS3 + 1
 https://www.youtube.com/watch?v=Ejkb_YpuHWs

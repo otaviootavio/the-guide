@@ -1,6 +1,7 @@
 ---
-playlist-title: Missing Semester IAP 2020
-
+playlistTitle: Missing Semester IAP 2020
+descricaoPlaylist: Lecture videos from the class offered during MIT's Independent
+  Activities Period in 2020.
 ---
 ### Lecture 1: Course Overview + The Shell (2020) + 1
 https://www.youtube.com/watch?v=Z56Jmr9Z34Q
