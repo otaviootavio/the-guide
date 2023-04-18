@@ -1,4 +1,4 @@
-// Importando os módulos necessários
+// Import required modules
 const axios = require('axios');
 const fs = require('fs');
 const { writeFileSync } = require('fs');
@@ -6,19 +6,19 @@ const path = require('path');
 require('dotenv').config();
 const shortid = require('shortid');
 
-
-function createFolderReturnPath(text){
+function createFolderIfNotExist(folderName) {
   try {
-    if (!fs.existsSync(`output/${text}`)) {
-      fs.mkdirSync(`output/${text}`);
-      return (`output/${text}`);
+    const folderPath = `output/${folderName}`;
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath);
     }
+    return folderPath;
   } catch (err) {
     console.error(err);
   }
 }
 
-async function generateText(text) {
+async function generateTextUsingAPI(prompt) {
   const options = {
     method: 'POST',
     url: 'https://api.edenai.run/v2/text/generation',
@@ -29,7 +29,7 @@ async function generateText(text) {
     },
     data: {
       providers: 'cohere',
-      text: `${text}`,
+      text: `${prompt}`,
       temperature: 0.2,
       max_tokens: 250
     }
@@ -37,7 +37,13 @@ async function generateText(text) {
 
   try {
     const response = await axios.request(options);
-    const generatedText = response.data.cohere.generated_text.trim();
+    console.log(response);
+    const { cohere } = response.data;
+    if (cohere.error && cohere.status === 'fail') {
+      console.error(`Error generating text: ${cohere.error.message}`);
+      return null;
+    }
+    const generatedText = cohere.generated_text;
     return generatedText;
   } catch (error) {
     console.error(error);
@@ -45,58 +51,58 @@ async function generateText(text) {
   }
 }
 
-function parseMovieList(fileContent) {
+
+function parseListFromFileContent(fileContent) {
   const lines = fileContent.split(/\r?\n/);
-  const movies = [];
+  const items = [];
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  for (const line of lines) {
     const match = line.match(/^(.+?)\s*(?:\r?\n|$)/);
-
     if (match) {
-      movies.push(match[1]);
+      items.push(match[1]);
     }
   }
 
-  return movies;
+  return items;
 }
 
-async function generateReview(fileName) {
-  const fileContent = fs.readFileSync(`./output/${fileName}`, 'utf8');
-  const movieList = parseMovieList(fileContent);
-  const movieTitle = movieList[4].replace(/[^a-z0-9]/gi, '_').toLowerCase();
-  const pathFolder = createFolderReturnPath(fileName.replace(/[^a-z0-9]/gi, '_').toLowerCase())
+async function generateInviteForTitle(itemTitle, folderPath) {
+  const generatedText = await generateTextUsingAPI(`Generate a one paragraph invite to consume ${itemTitle}`);
+  console.log(`Generated text for ${itemTitle}: ${generatedText}`);
+  const inviteFileName = `${itemTitle}_${Buffer.from(generatedText, 'utf-8').toString('base64').substr(0, 5)}.md`;
 
-  if (movieList.length === 0) {
-    console.log('The movie list is empty. \n');
+  fs.writeFileSync(`./${folderPath}/${itemTitle}.md`, `# ${itemTitle}\n\n${generatedText}`);
+  console.log(`File created at ${inviteFileName}`);
+}
+
+async function generateInvitesForItems(fileName) {
+  const fileContent = fs.readFileSync(`./output/${fileName}`, 'utf8');
+  const itemList = parseListFromFileContent(fileContent);
+  const folderPath = createFolderIfNotExist(fileName.replace(/[^a-z0-9]/gi, '_').toLowerCase());
+
+  if (itemList.length === 0) {
+    console.log('The item list is empty. \n');
     return;
   }
-  console.log(`This is the title: ${movieTitle} \n`);
 
-  // Generate text using the first movie title in the list
-  const generatedText = await generateText(`Generate a one paragraph invite to consume ${movieTitle}`);
-  console.log(`Generated text: ${generatedText}`);
-  const reviewFileName = `${movieTitle}_${Buffer.from(generatedText,'utf-8')
-    .toString('base64')
-    .substr(0, 5)}.md`;
-
-  fs.writeFileSync(`./${pathFolder}/${movieTitle}.md`, `# ${movieTitle}\n\n${generatedText}`);
-  console.log(`File created at ${reviewFileName}`);
+  for (const item of itemList) {
+    const itemTitle = item.replace(/[^a-z0-9]/gi, '_').toLowerCase().replace(/^[^a-z0-9]+|[^a-z0-9]+$/gi, '');
+    await generateInviteForTitle(itemTitle, folderPath);
+  }
 }
 
-async function generateTextToFile() {
-  const text = "Generate a list of cool books to study computer science at graduation";
-  const generatedText = await generateText(text);
-  if (generatedText) {
+async function generateListAndInvites() {
+  const prompt = "Generate a list of cool books to study computer science at graduation";
+  const generatedList = await generateTextUsingAPI(prompt);
+  if (generatedList) {
     const fileName = `result_${shortid.generate()}.md`;
-    const fileContent = `#${text}\n\n${generatedText}`;
+    const fileContent = `#${prompt}\n\n${generatedList}`;
     writeFileSync(`./output/${fileName}`, fileContent);
     console.log(`File '${fileName}' generated successfully.`);
-    await generateReview(fileName);
+    await generateInvitesForItems(fileName);
   }
 }
 
 (async () => {
-  await generateTextToFile();
+  await generateListAndInvites();
 })();
-
