@@ -67,7 +67,7 @@ function parseListFromFileContent(fileContent) {
 }
 
 async function generateInviteForTitle(itemTitle, folderPath) {
-  const generatedText = await generateTextUsingAPI(`Generate a one paragraph invite to consume ${itemTitle}`);
+  const generatedText = await generateTextUsingAPI(`Generate ${itemTitle} for based on handmande icecream, write like willy wonka`);
   console.log(`Generated text for ${itemTitle}: ${generatedText}`);
   const inviteFileName = `${itemTitle}_${Buffer.from(generatedText, 'utf-8').toString('base64').substr(0, 5)}.md`;
 
@@ -92,11 +92,11 @@ async function generateInvitesForItems(fileName) {
 }
 
 async function generateListAndInvites() {
-  const prompt = "Generate a list of cool books to study computer science at graduation";
+  const prompt = "Generate a cool structure for course on max 4 topics. Write big phrases for the topics.";
   const generatedList = await generateTextUsingAPI(prompt);
   if (generatedList) {
     const fileName = `result_${shortid.generate()}.md`;
-    const fileContent = `#${prompt}\n\n${generatedList}`;
+    const fileContent = `${generatedList}`;
     writeFileSync(`./output/${fileName}`, fileContent);
     console.log(`File '${fileName}' generated successfully.`);
     await generateInvitesForItems(fileName);
