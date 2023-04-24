@@ -1,9 +1,9 @@
 import OzoList from './OzoList';
 
-export default function HeaderComponent({onezerooneList}){
+export default function HeaderComponent({onezerooneList = []}){
   return <div>
-    <h3>The Engineer&apos;s guide to blockchain</h3>
-    <p>We help undergrad students to <mark>learn</mark> blockchain</p>
+    <h3>The Comanche Hackers&apos; Odyssey</h3>
+    <p>We empower <mark>individuals</mark> to navigate the crypto terrain</p>
     <br />
     <h1>Learning paths</h1>
     <OzoList markdownList={onezerooneList} />

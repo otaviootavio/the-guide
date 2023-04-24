@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function OzoList({markdownList}) {
+export default function OzoList({markdownList = []}) {
   return (
   <div>
     {markdownList.map(({ id, title, description }) => (

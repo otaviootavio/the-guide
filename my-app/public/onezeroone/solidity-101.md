@@ -200,8 +200,9 @@ To become proficient in smart contract development and blockchain technology, it
 ### Need another explanation?
 There are also many resources available online to help you learn more about smart contracts and blockchain technology, such as documentation, tutorials, and online communities. Don't be afraid to ask questions and seek help when you encounter difficulties or have questions.
 
-[**Solidity Documentation**](https://docs.soliditylang.org/en/v0.8.19/): The official documentation for Solidity, including a language reference, tutorials, and examples.
-[**Solidity By Example**](https://solidity-by-example.org/): A collection of Solidity code examples for beginners, including contracts for storing data, managing ownership, and implementing simple games.
+[Solidity Documentation](https://docs.soliditylang.org/en/v0.8.19/): The official documentation for Solidity, including a language reference, tutorials, and examples.
+<br/>
+[Solidity By Example](https://solidity-by-example.org/): A collection of Solidity code examples for beginners, including contracts for storing data, managing ownership, and implementing simple games.
 
 
 ## That is enough for today!

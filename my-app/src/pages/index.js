@@ -1,29 +1,44 @@
 import { marked } from 'marked';
 import FooterComponent from './components/FooterComponent';
 import HeaderComponent from './components/HeaderComponent';
+import fs from 'fs';
+import path from 'path';
 
 export async function getStaticProps() {
-  const metadataUrl = new URL('/post/data.json', "http://localhost:3000");
+  const metadataUrl = new URL('/post/data.json', 'http://localhost:3000');
   const metadataResponse = await fetch(metadataUrl);
   const markdownList = await metadataResponse.json();
 
-  const onezerooneList = [{ "id": "react-solidity-101" }, { "id": "cryptography-101" }, { "id": "solidity-101" }]
+  const onezerooneDirectory = path.join(process.cwd(), 'public', 'onezeroone');
+  const onezerooneFilenames = fs.readdirSync(onezerooneDirectory).filter((filename) => /\.md$/.test(filename));
+  const onezerooneList = onezerooneFilenames.map((filename) => {
+    const id = filename.replace(/\.md$/, '');
+    return { id };
+  });
 
-  const markdownHomeURL = await new URL('/home.md', "http://localhost:3000");
+  const fetchMarkdownFile = async (filename) => {
+    const markdownUrl = new URL(`/onezeroone/${filename}`, 'http://localhost:3000');
+    const markdownResponse = await fetch(markdownUrl);
+    return await markdownResponse.text();
+  };
+
+  const markdownContents = await Promise.all(onezerooneFilenames.map(fetchMarkdownFile));
+  const htmlContents = markdownContents.map((markdown) => marked.parse(markdown));
+
+  const markdownHomeURL = new URL('/home.md', 'http://localhost:3000');
   const metadataHomeResponse = await fetch(markdownHomeURL);
   const markdownHomeText = await metadataHomeResponse.text();
-  // Mesclar os metadados YAML do arquivo .md com os metadados do arquivo data.json
+  // Merge YAML metadata from .md file with metadata from data.json file
   const htmlHome = marked.parse(markdownHomeText);
-
 
   return {
     props: {
       markdownList,
-      htmlHome: htmlHome,
+      htmlHome,
       onezerooneList,
+      htmlContents,
     },
   };
-
 }
 
 

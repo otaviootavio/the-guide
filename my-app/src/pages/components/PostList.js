@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { BiHardHat } from 'react-icons/bi';
 import { FiAlertTriangle } from 'react-icons/fi';
 
-export function PostList(markdownList) {
+export function PostList({markdownList = []}) {
   return <details>
     <summary><BiHardHat /><FiAlertTriangle /></summary>
     <ul>
